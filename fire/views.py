@@ -1,6 +1,8 @@
+from .models import Incident
+from django.db.models import F
 from django.shortcuts import render
 from django.views.generic.list import ListView
-from fire.models import Locations, Incident
+from fire.models import Locations, Incident, FireStation
 from django.db import connection
 from django.http import JsonResponse
 from django.db.models.functions import ExtractMonth
@@ -177,3 +179,51 @@ def multipleBarbySeverity(request):
         result[severity_level] = dict(sorted(result[severity_level].items()))
 
     return JsonResponse(result)
+
+
+def map_station(request):
+    fireStations = FireStation.objects.values('name', 'latitude', 'longitude')
+
+    for fireStation in fireStations:
+        fireStation['latitude'] = float(fireStation['latitude'])
+        fireStation['longitude'] = float(fireStation['longitude'])
+
+    fireStations_list = list(fireStations)
+
+    context = {
+        'fireStations': fireStations_list,
+    }
+
+    return render(request, 'map_station.html', context)
+
+
+def map_incident(request):
+    city = request.GET.get('city', None)
+
+    incidents_query = Incident.objects.select_related('location').all()
+
+    if city:
+        incidents_query = incidents_query.filter(
+            location__city__icontains=city
+        )
+
+    incidents_list = [
+        {
+            'name': incident.location.name,
+            'latitude': float(incident.location.latitude),
+            'longitude': float(incident.location.longitude),
+            'description': incident.description,
+            'city': incident.location.city,
+        }
+        for incident in incidents_query
+    ]
+
+    cities = Locations.objects.values("city").distinct()
+
+    context = {
+        'incidents': incidents_list,
+        'current_city': city,
+        'cities': cities
+    }
+
+    return render(request, 'map_incident.html', context)
