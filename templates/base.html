@@ -30,9 +30,9 @@
     <div class="wrapper">
       <div class="main-header">
         <!-- Logo Header -->
-        <div class="logo-header" data-background-color="blue">
+        <div class="logo-header" data-background-color="red">
           <a href="{% url 'home' %}" class="logo">
-            <img src="{% static 'img/logo.svg' %}" alt="navbar brand" class="navbar-brand" />
+            <h1 class="my-2 text-white fw-bold">FireApp</h1>
           </a>
           <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon">
@@ -49,7 +49,7 @@
         <!-- End Logo Header -->
 
         <!-- Navbar Header -->
-        <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
+        <nav class="navbar navbar-header navbar-expand-lg" data-background-color="red2">
           <div class="container-fluid">
             <div class="collapse" id="search-nav">
               
@@ -105,7 +105,7 @@
               </div>
             </div>
             <ul class="nav nav-primary">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a href="{% url 'home' %}">
                   <i class="fas fa-home"></i>
                   <span class="sub-item">Dashboard</span>
@@ -126,8 +126,33 @@
                 <div class="collapse" id="base">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="components/avatars.html">
+                      <a href="{% url 'locations' %}">
                         <span class="sub-item">Locations</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'incident' %}">
+                        <span class="sub-item">Incidents</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'firestation' %}">
+                        <span class="sub-item">Fire Stations</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'firefighters' %}">
+                        <span class="sub-item">Fire Fighters</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'firetruck' %}">
+                        <span class="sub-item">Fire Trucks</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{% url 'weatherconditions' %}">
+                        <span class="sub-item">Weather Conditions</span>
                       </a>
                     </li>
                     
@@ -209,10 +234,15 @@
         </footer>
       </div>
     </div>
+    {% include "includes/messages.html" %}
     <!--   Core JS Files   -->
     <script src="{% static 'js/core/jquery.3.2.1.min.js' %}"></script>
     <script src="{% static 'js/core/popper.min.js' %}"></script>
     <script src="{% static 'js/core/bootstrap.min.js' %}"></script>
+
+    <!-- Pandaya sa toast (redundancy alert) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <!-- jQuery UI -->
     <script src="{% static 'js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js' %}"></script>

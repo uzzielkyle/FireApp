@@ -45,7 +45,8 @@ class Incident(BaseModel):
         ('Major Fire', 'Major Fire'),
     )
     location = models.ForeignKey(Locations, on_delete=models.CASCADE)
-    date_time = models.DateTimeField(blank=True, null=True, validators=[validate_not_future])
+    date_time = models.DateTimeField(
+        blank=True, null=True, validators=[validate_not_future])
     severity_level = models.CharField(max_length=45, choices=SEVERITY_CHOICES)
     description = models.CharField(max_length=250)
 
@@ -85,7 +86,8 @@ class Firefighters(BaseModel):
     name = models.CharField(max_length=150)
     rank = models.CharField(max_length=150)
     experience_level = models.CharField(max_length=150, choices=XP_CHOICES)
-    station = models.ForeignKey(FireStation, on_delete=models.CASCADE, null=True, blank=True)
+    station = models.ForeignKey(
+        FireStation, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Firefighter'
@@ -109,9 +111,12 @@ class FireTruck(BaseModel):
 
 class WeatherConditions(BaseModel):
     incident = models.ForeignKey(Incident, on_delete=models.CASCADE)
-    temperature = models.DecimalField(max_digits=10, decimal_places=2, validators=[validate_non_negative])
-    humidity = models.DecimalField(max_digits=10, decimal_places=2, validators=[validate_non_negative])
-    wind_speed = models.DecimalField(max_digits=10, decimal_places=2, validators=[validate_non_negative])
+    temperature = models.DecimalField(
+        max_digits=10, decimal_places=2, validators=[validate_non_negative])
+    humidity = models.DecimalField(
+        max_digits=10, decimal_places=2, validators=[validate_non_negative])
+    wind_speed = models.DecimalField(
+        max_digits=10, decimal_places=2, validators=[validate_non_negative])
     weather_description = models.CharField(max_length=150)
 
     class Meta:

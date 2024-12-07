@@ -45,8 +45,7 @@ class Command(BaseCommand):
                                    for rank in Firefighters.XP_CHOICES]),
                 experience_level=fake.random_element(
                     elements=("Beginner", "Intermediate", "Expert")),
-                station=fake.random_element(elements=["Probationary Firefighter", "Firefighter I",
-                                            "Firefighter II", "Firefighter III", "Driver", "Captain", "Battalion Chief"])
+                station=random.choice(FireStation.objects.all())
             )
             self.stdout.write(self.style.SUCCESS(
                 f"Created Firefighter: {firefighter.name}"))
