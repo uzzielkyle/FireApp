@@ -12,6 +12,15 @@ class IncidentForm(ModelForm):
     class Meta:
         model = Incident
         fields = "__all__"
+        widgets = {
+            'date_time': DateInput(
+                attrs={
+                    'type': 'datetime-local',
+                    'placeholder': 'YYYY-MM-DD HH:MM',
+                    'class': 'form-control'
+                }
+            )
+        }
 
 
 class FireStationForm(ModelForm):
