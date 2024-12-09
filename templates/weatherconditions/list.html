@@ -66,11 +66,11 @@
                   <td>{{ object.wind_speed }}</td>
                   <td>{{ object.weather_description }}</td>
                   <td>
-                    <a href="{% url 'weatherconditions-edit' object.pk %}"
+                    <a href="{% url 'weatherconditions-edit' object.id %}"
                       >Edit</a
                     >
                     <a
-                      href="{% url 'weatherconditions-delete' object.pk %}"
+                      href="{% url 'weatherconditions-delete' object.id %}"
                       class="text-danger"
                       >Delete</a
                     >

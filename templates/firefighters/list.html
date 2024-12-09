@@ -62,9 +62,9 @@
                   <td>{{ object.experience_level }}</td>
                   <td>{{ object.station }}</td>
                   <td>
-                    <a href="{% url 'firefighters-edit' object.pk %}">Edit</a>
+                    <a href="{% url 'firefighters-edit' object.id %}">Edit</a>
                     <a
-                      href="{% url 'firefighters-delete' object.pk %}"
+                      href="{% url 'firefighters-delete' object.id %}"
                       class="text-danger"
                       >Delete</a
                     >

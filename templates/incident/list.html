@@ -40,9 +40,9 @@
                   <td>{{ object.severity_level }}</td>
                   <td>{{ object.description }}</td>
                   <td>
-                    <a href="{% url 'incident-edit' object.pk %}">Edit</a>
+                    <a href="{% url 'incident-edit' object.id %}">Edit</a>
                     <a
-                      href="{% url 'incident-delete' object.pk %}"
+                      href="{% url 'incident-delete' object.id %}"
                       class="text-danger"
                       >Delete</a
                     >

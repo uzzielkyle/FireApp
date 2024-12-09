@@ -61,9 +61,9 @@
                   <td>{{ object.capacity }}</td>
                   <td>{{ object.station }}</td>
                   <td>
-                    <a href="{% url 'firetruck-edit' object.pk %}">Edit</a>
+                    <a href="{% url 'firetruck-edit' object.id %}">Edit</a>
                     <a
-                      href="{% url 'firetruck-delete' object.pk %}"
+                      href="{% url 'firetruck-delete' object.id %}"
                       class="text-danger"
                       >Delete</a
                     >
