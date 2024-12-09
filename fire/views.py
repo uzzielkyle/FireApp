@@ -29,8 +29,8 @@ class HomePageView(ListView):
 
 
 class LocationsList(ListView):
-    model = FireStation
-    context_object_name = 'locations'
+    model = Locations
+    context_object_name = 'object_list'
     template_name = 'locations/list.html'
     paginate_by = 5
 
@@ -73,7 +73,8 @@ class LocationsDelete(DeleteView):
     success_url = reverse_lazy('locations')
 
     def form_valid(self, form):
-        messages.success(self.request, f'Deleted successfully.')
+        name = self.get_object().name
+        messages.success(self.request, f'Location "{name}" has been successfully deleted.')
         return super().form_valid(form)
 
 
@@ -197,7 +198,7 @@ class FirefightersList(ListView):
     paginate_by = 5
 
     def get_queryset(self, *args, **kwargs):
-        qs = super().get_queryset(*args, **kwargs)
+        qs = super().get_queryset(*args, **kwargs).order_by('name')
         if self.request.GET.get("q") != None:
             query = self.request.GET.get('q')
             qs = qs.filter(Q(name__icontains=query))
@@ -246,7 +247,7 @@ class FireTruckList(ListView):
     paginate_by = 5
 
     def get_queryset(self, *args, **kwargs):
-        qs = super().get_queryset(*args, **kwargs)
+        qs = super().get_queryset(*args, **kwargs).order_by('truck_number')
         if self.request.GET.get("q") != None:
             query = self.request.GET.get('q')
             qs = qs.filter(Q(truck_number__icontains=query))
@@ -295,10 +296,10 @@ class WeatherConditionsList(ListView):
     paginate_by = 5
 
     def get_queryset(self, *args, **kwargs):
-        qs = super().get_queryset(*args, **kwargs)
+        qs = super().get_queryset(*args, **kwargs).order_by('-created_at')
         if self.request.GET.get("q") != None:
             query = self.request.GET.get('q')
-            qs = qs.filter(Q(truck_number__icontains=query))
+            qs = qs.filter(Q(incident__location__name__icontains=query))
         return qs
 
 
