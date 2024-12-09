@@ -90,21 +90,17 @@ class IncidentCreate(CreateView):
     template_name = 'incident/add.html'
     success_url = reverse_lazy('incident')
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        date_time = request.POST.get("date_time")
-        current_date_time = timezone.now()
+    def form_valid(self, form):
+        date_time = form.cleaned_data.get("date_time")
+        current_date_time = localtime().astimezone()
 
         # Validate date_time
         if date_time > current_date_time:
-            messages.error(request, "Future dates are not allowed")
+            messages.error(self.request, "Future dates are not allowed")
 
             return self.form_invalid(self.get_form())
-
-        return super().post(request, *args, **kwargs)
-
-    def form_valid(self, form):
         name = form.instance
+
         messages.success(self.request, f'{name} has been successfully added.')
         return super().form_valid(form)
 
