@@ -308,11 +308,10 @@ class WeatherConditionsCreate(CreateView):
     template_name = 'weatherconditions/add.html'
     success_url = reverse_lazy('weatherconditions')
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        temperature = request.POST.get('temperature')
-        humidity = request.POST.get('humidity')
-        wind_speed = request.POST.get('wind_speed')
+    def form_valid(self, form):
+        temperature = form.cleaned_data.get('temperature')
+        humidity = form.cleaned_data.get('humidity')
+        wind_speed = form.cleaned_data.get('wind_speed')
 
         # Validate values
         errors = []
@@ -328,14 +327,11 @@ class WeatherConditionsCreate(CreateView):
         # If errors exist, display them and return to the form
         if errors:
             for error in errors:
-                messages.error(request, error)
+                messages.error(self.request, error)
             return self.form_invalid(self.get_form())
 
-        # Call the parent's post() if validation passes
-        return super().post(request, *args, **kwargs)
-
-    def form_valid(self, form):
         name = form.instance
+
         messages.success(self.request, f'{name} has been successfully added.')
         return super().form_valid(form)
 
