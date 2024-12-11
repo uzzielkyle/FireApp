@@ -64,7 +64,7 @@
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script>
   // Define the marker data (received from Django context)
-  var markerData = {{ incidents|safe }};
+  var markerData = JSON.parse('{{ incidents|safe }}');
 
   var viewLatitude = markerData[0].latitude ? markerData[0].latitude : "9.81644"
   var viewLongitude = markerData[0].longitude ? markerData[0].longitude : "118.72239"
